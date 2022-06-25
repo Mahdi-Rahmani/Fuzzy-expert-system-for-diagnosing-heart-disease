@@ -75,14 +75,14 @@ class Fuzzification:
     def get_y_of(self, x, point1, point2):
         # y = ax + b
         a, b = self.create_line(point1, point2)
-        return a * x + b
+        return a * int(x) + b
 
     def get_fuzzy_value(self, parameter, x):
         result = {}
         for sub_element in self.fuzzy_sets[parameter]:
             index = 0
             for point in self.fuzzy_sets[parameter][sub_element]:
-                if (index == 0 and point[1] == 1 and x < point[0]) or (index == 2 and point[1] == 1 and x > point[0]):
+                if (index == 0 and point[1] == 1 and int(x) < point[0]) or (index == 2 and point[1] == 1 and int(x) > point[0]):
                     result[sub_element] = 1
                     break
                 if index == 0:
@@ -90,7 +90,7 @@ class Fuzzification:
                     lastPoint = point
                     continue
                 index += 1
-                if lastPoint[0] <= x <= point[0]:
+                if lastPoint[0] <= int(x) <= point[0]:
                     result[sub_element] = self.get_y_of(x, lastPoint, point)
                     break
                 result[sub_element] = 0

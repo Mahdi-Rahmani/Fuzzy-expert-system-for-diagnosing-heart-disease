@@ -17,3 +17,9 @@ class ProvideResult(object):
         defuzzification = Defuzzification(fuzzification)
         health_status = defuzzification.get_health_status(health_memberships)
         return health_status
+
+    def modify_input(self, input_dict):
+        input_dict['cholesterol'] = input_dict.pop('cholestrol')
+        input_dict['ECG'] = input_dict.pop('ecg')
+        input_dict['thallium'] = input_dict.pop('thallium_scan')
+        input_dict['maximum_heart_rate'] = input_dict.pop('heart_rate')
