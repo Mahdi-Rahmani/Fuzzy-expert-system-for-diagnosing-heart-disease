@@ -1,4 +1,4 @@
-class fuzzification:
+class Fuzzification:
     def __init__(self):
         self.fuzzy_sets = {
             'age': {
@@ -58,7 +58,7 @@ class fuzzification:
         a, b = self.create_line(point1, point2)
         return a * x + b
 
-    def get_fuzzy_value(self, parameter, x, points, value):
+    def get_fuzzy_value(self, parameter, x):
         result = {}
         for sub_element in self.fuzzy_sets[parameter]:
             index = 0

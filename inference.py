@@ -1,5 +1,5 @@
 import re
-class inference:
+class Inference:
     def __init__(self):
         self.rules = self.read_rules()
 
@@ -15,7 +15,7 @@ class inference:
             for line in f:
                 rule = []
                 if 'OR' in line:
-                    for normal_rule in self.change_to_normal_rule(line)
+                    for normal_rule in self.change_to_normal_rule(line):
                         rules.append(normal_rule)
                     continue
                 for i in re.split('[()]', line):
