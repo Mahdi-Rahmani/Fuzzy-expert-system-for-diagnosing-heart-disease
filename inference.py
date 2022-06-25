@@ -54,7 +54,7 @@ class Inference:
             # calculate min if we have AND between conditions of a rule
             for i in range(len(rule)-1):
                 memberships.append(fuzzy_value[rule[i][0]][rule[i][1]])
-            result[rule[len(rule)][1]].append(min(memberships))
+            result[rule[len(rule)-1][1]].append(min(memberships))
         # calculate max on results for each health subset
         for subset in result:
             result[subset] = max(result[subset])
