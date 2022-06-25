@@ -107,3 +107,13 @@ class Fuzzification:
         for parameter in user_input:
             fuzzy_result[parameter] = self.get_fuzzy_value(parameter, user_input[parameter])
         return fuzzy_result
+
+    """ according to keys in self.fuzzy_sets and rules we should use standard 
+    key as input. so we can modify the input we get from web page"""
+
+    def modify_input(self, input_dict):
+        input_dict['cholesterol'] = input_dict.pop('cholestrol')
+        input_dict['ECG'] = input_dict.pop('ecg')
+        input_dict['thallium'] = input_dict.pop('thallium_scan')
+        input_dict['maximum_heart_rate'] = input_dict.pop('heart_rate')
+        return input_dict
