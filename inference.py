@@ -40,7 +40,7 @@ class Inference:
             rules.append(rule)
         return rules
 
-    def result_membership(self, fuzzification):
+    def result_membership(self, fuzzy_value):
         result = {
             'healthy': [0],
             'sick_1': [0],
@@ -53,7 +53,7 @@ class Inference:
             memberships = []
             # calculate min if we have AND between conditions of a rule
             for i in range(len(rule)-1):
-                memberships.append(fuzzification[rule[i][0]][rule[i][1]])
+                memberships.append(fuzzy_value[rule[i][0]][rule[i][1]])
             result[rule[len(rule)][1]].append(min(memberships))
         # calculate max on results for each health subset
         for subset in result:
