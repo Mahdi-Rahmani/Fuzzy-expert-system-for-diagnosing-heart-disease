@@ -77,3 +77,14 @@ class Fuzzification:
                 result[sub_element] = 0
                 lastPoint = point
         return result
+
+    """ this method find fuzzy value for each parameter of input. our input has a dict 
+    format that we can see in final_result class also. finding fuzzy value is possible 
+    with get_fuzzy_value function in this class"""
+
+    def fuzzify_user_input(self, user_input):
+        # save the fuzzy results of inputs in fuzzy_result dict
+        fuzzy_result = {}
+        for parameter in user_input:
+            fuzzy_result[parameter] = self.get_fuzzy_value(parameter, user_input[parameter])
+        return fuzzy_result

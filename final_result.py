@@ -6,4 +6,4 @@ class ProvideResult(object):
 
     @staticmethod
     def get_final_result(input_dict: dict) -> str:
-        pass
+        fuzzi

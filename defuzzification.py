@@ -6,7 +6,8 @@ class Defuzzification:
 
     """ In this function first we should discrete the x axis of health chart
     Then according to below formula we can calculate the center of mass:
-        x_c = (sigma (mu(i) * x(i))) / (sigma (mu(i)))  """
+    formula :   x_c = (sigma (mu(i) * x(i))) / (sigma (mu(i)))  """
+
     def get_center_of_mass(self):
         # 1- discretization
         points = np.linspace(0, 5, 1000)
