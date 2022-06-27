@@ -56,10 +56,22 @@ class Defuzzification:
     function then we should the fuzzy values at center of mass point in health chart
     then we can return the health status that has maximum membership value"""
     def get_health_status(self, inference_result):
+        health_status = []
         center_of_mass = self.get_center_of_mass(inference_result)
-        COM_fuzzy_value = self.fuzzification.get_fuzzy_value('health', center_of_mass)
+        if center_of_mass < 1.78:
+            health_status.append("healthy")
+        if 1 <= center_of_mass <= 2.51:
+            health_status.append("sick1")
+        if 1.78 <= center_of_mass <= 3.25:
+            health_status.append("sick2")
+        if 1.5 <= center_of_mass <= 4.5:
+            health_status.append("sick3")
+        if 3.25 < center_of_mass :
+            health_status.append("sick4")
+
+        #COM_fuzzy_value = self.fuzzification.get_fuzzy_value('health', center_of_mass)
         # change value and key to find maximum value
         # (a trick for finding a key with maximum value in dictionary)
-        inverse = [(value, key) for key, value in COM_fuzzy_value.items()]
-        health_status = max(inverse)[1]
-        return health_status
+        #inverse = [(value, key) for key, value in COM_fuzzy_value.items()]
+        #health_status = max(inverse)[1]
+        return ' & '.join(text) + str(center_of_mass)
