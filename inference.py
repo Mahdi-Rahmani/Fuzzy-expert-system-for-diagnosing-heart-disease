@@ -2,7 +2,7 @@ import re
 class Inference:
     def __init__(self):
         self.rules = self.read_rules()
-
+        print(self.rules)
     """ This function read rules from rules.fcl file
     also save parts of a rule as a list. at the end the all rules are saved in rules list.
     for example if we have below rule:
@@ -53,7 +53,9 @@ class Inference:
             memberships = []
             # calculate min if we have AND between conditions of a rule
             for i in range(len(rule)-1):
+                print(rule[i][0],rule[i][1])
                 memberships.append(fuzzy_value[rule[i][0]][rule[i][1]])
+            print(len(rule)-1)
             result[rule[len(rule)-1][1]].append(min(memberships))
         # calculate max on results for each health subset
         for subset in result:

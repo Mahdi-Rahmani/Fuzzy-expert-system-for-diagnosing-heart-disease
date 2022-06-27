@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Defuzzification:
     def __init__(self, fuzzification):
         # we need fuzzification Object to find the fuzzy value of
@@ -12,7 +13,7 @@ class Defuzzification:
 
     def get_center_of_mass(self, health):
         # 1- discretization
-        points = np.linspace(0, 5, 1000)
+        points = np.linspace(0, 4, 1000)
         # 2- define two variables. one for the numerator in center of mass formula (sigma_mu_x)
         #    and one for denominator of that formula (sigma_mu)
         sigma_mu_x = 0.0
@@ -35,11 +36,12 @@ class Defuzzification:
         # health['healthy']  |+ + + +* * * * + + +* + + +
         #                    |_____*______/________*_______
         for i in range(len(points)):
-            healthy = min(health['healthy'], self.fuzzification.get_fuzzy_value('healthy', points[i]))
-            sick_1 = min(health['sick_1'], self.fuzzification.get_fuzzy_value('sick_1', points[i]))
-            sick_2 = min(health['sick_2'], self.fuzzification.get_fuzzy_value('sick_2', points[i]))
-            sick_3 = min(health['sick_3'], self.fuzzification.get_fuzzy_value('sick_3', points[i]))
-            sick_4 = min(health['sick_4'], self.fuzzification.get_fuzzy_value('sick_4', points[i]))
+            fuzzy_values_of_point = self.fuzzification.get_fuzzy_value('health', points[i])
+            healthy = min(health['healthy'], fuzzy_values_of_point['healthy'])
+            sick_1 = min(health['sick_1'], fuzzy_values_of_point['sick_1'])
+            sick_2 = min(health['sick_2'], fuzzy_values_of_point['sick_2'])
+            sick_3 = min(health['sick_3'], fuzzy_values_of_point['sick_3'])
+            sick_4 = min(health['sick_4'], fuzzy_values_of_point['sick_4'])
             overall_health = max(healthy, sick_1, sick_2, sick_3, sick_4)
             # 4- update sigma_mu_x and sigma_mu point by point
             sigma_mu_x += overall_health * points[i]
@@ -55,6 +57,7 @@ class Defuzzification:
     """ in this method first we should calculate center of mass with get_center_of_mass
     function then we should the fuzzy values at center of mass point in health chart
     then we can return the health status that has maximum membership value"""
+
     def get_health_status(self, inference_result):
         health_status = []
         center_of_mass = self.get_center_of_mass(inference_result)
@@ -66,12 +69,12 @@ class Defuzzification:
             health_status.append("sick2")
         if 1.5 <= center_of_mass <= 4.5:
             health_status.append("sick3")
-        if 3.25 < center_of_mass :
+        if 3.25 < center_of_mass:
             health_status.append("sick4")
 
-        #COM_fuzzy_value = self.fuzzification.get_fuzzy_value('health', center_of_mass)
+        # COM_fuzzy_value = self.fuzzification.get_fuzzy_value('health', center_of_mass)
         # change value and key to find maximum value
         # (a trick for finding a key with maximum value in dictionary)
-        #inverse = [(value, key) for key, value in COM_fuzzy_value.items()]
-        #health_status = max(inverse)[1]
-        return ' & '.join(text) + str(center_of_mass)
+        # inverse = [(value, key) for key, value in COM_fuzzy_value.items()]
+        # health_status = max(inverse)[1]
+        return ' & '.join(health_status) + ": " + str(center_of_mass)

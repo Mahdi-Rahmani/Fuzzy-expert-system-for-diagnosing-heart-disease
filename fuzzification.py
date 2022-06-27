@@ -8,8 +8,8 @@ class Fuzzification:
                 'asymptomatic': (4,1)
             },
             'exercise': {
-                'not_allowable': (0,1),
-                'allowable': (1,1)
+                'true': (0,1),
+                'false': (1,1)
             },
             'thallium': {
                 'normal': (3,1),
@@ -52,7 +52,7 @@ class Fuzzification:
             'ECG': {
                 'normal': [(-0.5,1), (0,1), (0.4,0)],
                 'abnormal': [(0.2,0), (1,1), (1.8,0)],
-                'hypertrophy': [(1.4,0), (1,9,1), (2,5,1)]
+                'hypertrophy': [(1.4,0), (1.9,1), (2.5,1)]
             },
             'old_peak': {
                 'low': [(0,1), (1,1), (2,0)],
