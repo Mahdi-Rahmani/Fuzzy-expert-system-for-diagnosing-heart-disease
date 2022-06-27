@@ -1,5 +1,26 @@
 class Fuzzification:
     def __init__(self):
+        self.crisp_sets = {
+            'chest_pain': {
+                'typical_anginal': (1,1),
+                'atypical_anginal': (2,1),
+                'non_aginal_pain': (3,1),
+                'asymptomatic': (4,1)
+            },
+            'exercise': {
+                'not_allowable': (0,1),
+                'allowable': (1,1)
+            },
+            'thallium': {
+                'normal': (3,1),
+                'medium': (6,1),
+                'high': (7,1)
+            },
+            'sex': {
+                'male': (0,1),
+                'female': (1,1)
+            }
+        }
         self.fuzzy_sets = {
             'age': {
                 'young': [(0,1), (29,1), (38,0)],
@@ -38,25 +59,6 @@ class Fuzzification:
                 'risk': [(1.5,0), (2.8,1), (4.2,0)],
                 'terrible': [(2.5,0), (4,1), (6,1)]
             },
-            'chest_pain': {
-                'typical_anginal': [(0,1),(1,1),(2,0)],
-                'atypical_anginal' : [(1,0),(2,1),(3,0)],
-                'non_aginal_pain' : [(2,0), (3,1), (4,0)],
-                'asymptomatic' : [(3,0), (4,1), (5,1)]
-            },
-            'exercise': {
-                'not_allowable': [(-1,1), (0,1), (1,0)],
-                'allowable': [(0,0),(1,1),(2,1)]
-            },
-            'thallium': {
-                'normal': [(0,1), (3,1), (6,0)],
-                'medium': [(3,0), (6,1), (7,0)],
-                'high' : [(6,0), (7,1), (8,1)]
-            },
-            'sex': {
-                'male': [(-1,1), (0,1), (1,0)],
-                'female': [(0,0),(1,1),(2,1)]
-            },
             'health': {
                 'healthy': [(0,1), (0.25,1), (1,0)],
                 'sick_1': [(0,0), (1,1), (2,0)],
@@ -81,22 +83,29 @@ class Fuzzification:
 
     def get_fuzzy_value(self, parameter, x):
         result = {}
-        for sub_element in self.fuzzy_sets[parameter]:
-            index = 0
-            for point in self.fuzzy_sets[parameter][sub_element]:
-                if (index == 0 and point[1] == 1 and float(x) < point[0]) or (index == 2 and point[1] == 1 and float(x) > point[0]):
+        if parameter in self.crisp_sets:
+            for sub_element in self.crisp_sets[parameter]:
+                if self.crisp_sets[parameter][sub_element][0] == x:
                     result[sub_element] = 1
-                    break
-                if index == 0:
+                else:
+                    result[sub_element] = 0
+        else:
+            for sub_element in self.fuzzy_sets[parameter]:
+                index = 0
+                for point in self.fuzzy_sets[parameter][sub_element]:
+                    if (index == 0 and point[1] == 1 and float(x) < point[0]) or (index == 2 and point[1] == 1 and float(x) > point[0]):
+                        result[sub_element] = 1
+                        break
+                    if index == 0:
+                        index += 1
+                        lastPoint = point
+                        continue
                     index += 1
+                    if lastPoint[0] <= float(x) <= point[0]:
+                        result[sub_element] = self.get_y_of(x, lastPoint, point)
+                        break
+                    result[sub_element] = 0
                     lastPoint = point
-                    continue
-                index += 1
-                if lastPoint[0] <= float(x) <= point[0]:
-                    result[sub_element] = self.get_y_of(x, lastPoint, point)
-                    break
-                result[sub_element] = 0
-                lastPoint = point
         return result
 
     """ this method find fuzzy value for each parameter of input. our input has a dict 
