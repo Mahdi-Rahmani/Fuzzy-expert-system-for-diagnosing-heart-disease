@@ -35,6 +35,7 @@ Heart rate    |  ECG  |  old peak  |  output  |
 
 For the simplicity of the work, the membership functions are defined linearly, and in the implementation, the equation of the lines can be obtained according to the above figures. It is obvious that the above equations are the equations of simple lines obtained by two points.
 - If 111≤x≤134 membership_function(x) = (134−𝑥)/23
+  
 Code of this section is available at this [link](https://github.com/Mahdi-Rahmani/Fuzzy-expert-system-for-diagnosing-heart-disease/blob/main/fuzzification.py)
 
 ## Step2: Inference
@@ -62,11 +63,13 @@ As you know, in fuzzy logic, there are different methods for calculating communi
 - Membership(healthy) = min(0.6 , 0) = 0
 - Membership(sick(s2)) = min(0.7 , 0.5) = 0.5
 
-High values are called the strength of each rule. In this case, rules 1 and 3 are the only activated rules. This step obtains the output which is the different degrees of the disease with different belonging values.
+High values are called the strength of each rule. In this case, rules 1 and 3 are the only activated rules. This step obtains the output which is the different degrees of the disease with different belonging values. 
+
 Code of this section is available at this [link](https://github.com/Mahdi-Rahmani/Fuzzy-expert-system-for-diagnosing-heart-disease/blob/main/inference.py)
 
 ## Step3: Defuzzification
-At this stage, we return to the world of absolute values with the help of repeated deductions to obtain the answer in the form of an absolute value. There are different methods for dephasing, one of the most important and widely used of which is the center of mass method. Please note that in some cases, more than 2 rules may be activated and they may belong to several sets of values. In these cases, we must combine the obtained answers. For this, we OR all the answers together, or in other words, we get the output of all the rules. After combining the answers of all the rules, we get the center of mass of the resulting figure.
+At this stage, we return to the world of absolute values with the help of repeated deductions to obtain the answer in the form of an absolute value. There are different methods for dephasing, one of the most important and widely used of which is the center of mass method. Please note that in some cases, more than 2 rules may be activated and they may belong to several sets of values. In these cases, we must combine the obtained answers. For this, we OR all the answers together, or in other words, we get the output of all the rules. After combining the answers of all the rules, we get the center of mass of the resulting figure. 
+
 Code of this section is available at this [link](https://github.com/Mahdi-Rahmani/Fuzzy-expert-system-for-diagnosing-heart-disease/blob/main/defuzzification.py)
 
 ## How to use?
